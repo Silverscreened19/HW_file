@@ -17,6 +17,7 @@ with open('data.txt', 'rt') as file:
 
 print(cook_book)
 
+
 dishes = list(cook_book.keys())
 
 
@@ -29,12 +30,19 @@ def get_shop_list_by_dishes(dishes, person_count):
             for element in recipy:
                 ingredient = element['ingredient_name']
                 quantity = int(element['quantity']) * person_count
-                measure = element['measure']
-                result[ingredient] = {'measure': measure, 'quantity': quantity}
+                if ingredient not in result.keys():
+                    measure = element['measure']
+                    result[ingredient] = {'measure': measure,
+                                          'quantity': quantity}
+                else:
+                    quantity += quantity
+                    measure = element['measure']
+                    result[ingredient] = {'measure': measure,
+                                          'quantity': quantity}
     print(result)
 
 
-get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 5)
+get_shop_list_by_dishes(['Фахитос', 'Омлет'], 5)
 
 with open('1.txt', 'rt') as file:
     file_1_list = file.readlines()
