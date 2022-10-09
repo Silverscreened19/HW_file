@@ -61,17 +61,28 @@ with open('3.txt', 'rt') as file:
     file_3_len = (len(file_3_list))
     file_3 = ' '.join(file_3_list)
 
+
 my_list = []
-my_list.append(file_1_len)
-my_list.append(file_2_len)
-my_list.append(file_3_len)
-my_list = sorted(my_list)
+dic_common = {
+    file_1_len: ['1.txt', file_1],
+    file_2_len: ['2.txt', file_2],
+    file_3_len: ['3.txt', file_3]
+    }
+
+dic_common = dict(sorted(dic_common.items()))
+
 
 with open('res.txt', 'w') as file:
-    for element in my_list:
-        if element == min(my_list):
-            file.writelines(f'2.txt\n{str(file_2_len)}\n{file_2}')
-        elif element == max(my_list):
-            file.writelines(f'3.txt\n{str(file_3_len)}\n{file_3}')
+    for key in dic_common.keys():
+        my_list.append(key)
+    my_list = sorted(my_list)
+    for key in dic_common.keys():
+        if key == min(my_list):
+            file.writelines(f'{dic_common[key][0]}\n{key}\n'
+                            f'{dic_common[key][1]}')
+        elif key == max(my_list):
+            file.writelines(f'{dic_common[key][0]}\n{key}\n'
+                            f'{dic_common[key][1]}')
         else:
-            file.writelines(f'1.txt\n{str(file_1_len)}\n{file_1}')
+            file.writelines(f'{dic_common[key][0]}\n{key}\n'
+                            f'{dic_common[key][1]}')
